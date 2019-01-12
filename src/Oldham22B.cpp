@@ -17,48 +17,45 @@ All of these functions, except main, shall have a return type of void.
 
 using namespace std;
 
-int getSize();
-string * getSpace(int size);
-void inputData(string *array, int size);
-void printData(string *array, int size);
+void getSize(int &size);
+void getSpace(string *&array, int &size);
+void inputData(string *array, int &size);
+void printData(string *array, int &size);
 void destroy(string *array);
 
 //main - calls the other functions; otherwise does almost nothing
 int main() {
-	int size = getSize();
-	size++;
-	string * array = getSpace(size);
+	int size = 0;
+	getSize(size);
+	size++;					//increasing the size by one to fit the size of the array later create
+	string * array = NULL;
+	getSpace(array, size);
 	inputData(array, size);
-	//cout << array[0];
-	for (int i =  0; i < size; i++)
-		cout << array[i] << endl;
-	//printData(array, size);
-	//destroy(array);
+	printData(array, size);
+	destroy(array);
 	return 0;
 }
 
 //getSize - which asks the user how many strings they want
-int getSize()
+void getSize(int &size)
 {
-	int size = 0;
 	cout << "how many strings you want: ";
 	cin >> size;
-	return size;
 }
 
 //getSpace - which gets an array in the heap of the size requested by the user
 //function return pointer to main
-string * getSpace(int size)
+void getSpace(string *&array, int &size)
 {
+	array = new string[size];
 	//create a pointer point to string array called array
-	string *array = new string[size];
-	return array;
+	//array = new string[size];
 }
 
 //inputData - which allows the user to input the strings and stores them in the array
-void inputData(string *array, int size)
+void inputData(string *array, int &size)
 {
-	for (int i =  0; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
 		getline(cin, array[i]);
 	}
@@ -66,10 +63,12 @@ void inputData(string *array, int size)
 
 
 //printData - which prints all the strings, one string per line
-void printData(string *array, int size)
+void printData(string *array, int &size)
 {
-	for (int i =  0; i < size; i++)
-	cout << array[i] << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << array[i] << endl;
+	}
 }
 
 
